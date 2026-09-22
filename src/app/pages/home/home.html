@@ -1,0 +1,195 @@
+<div class="min-h-screen bg-gray-950 text-white">
+
+  <!-- Hero -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <div class="py-20 text-center">
+
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold">
+        Discover Your Next Movie
+      </h1>
+
+      <p class="mt-6 max-w-2xl mx-auto text-lg text-gray-400">
+        Search thousands of movies and discover something
+        you'll love watching.
+      </p>
+
+      <!-- Search -->
+      <div class="mt-10 max-w-2xl mx-auto">
+
+        <app-search-bar
+          (search)="searchMovies($event)"
+        ></app-search-bar>
+
+      </div>
+      <!-- Genres -->
+     <div class="mt-8">
+         <app-genre-filter (genreSelected)="selectGenre($event)"></app-genre-filter>
+     </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- Movies -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+
+    <!-- Section Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-8">
+
+      <div>
+
+        @if (isSearching) {
+
+          <h2 class="text-2xl sm:text-3xl font-bold">
+            Search Results
+          </h2>
+
+          <p class="mt-1 text-sm text-gray-500">
+            Results for "{{ searchQuery }}"
+          </p>
+
+        } @else {
+
+          <h2 class="text-2xl sm:text-3xl font-bold">
+            Popular Movies
+          </h2>
+
+        }
+
+      </div>
+
+
+      @if (!loading && movies.length > 0) {
+
+        <span class="text-sm text-gray-500">
+          {{ movies.length }} movies
+        </span>
+
+      }
+
+    </div>
+
+
+    <!-- Loading -->
+    @if (loading) {
+
+      <div class="py-20 text-center">
+
+        <div
+          class="mx-auto w-10 h-10 border-4 border-gray-700 border-t-white rounded-full animate-spin"
+        ></div>
+
+        <p class="mt-5 text-gray-400">
+          @if (isSearching) {
+            Searching movies...
+          } @else {
+            Loading movies...
+          }
+        </p>
+
+      </div>
+
+    }
+
+
+    <!-- Error -->
+    @if (error && !loading) {
+
+      <div class="py-20 text-center">
+
+        <p class="text-red-400">
+          {{ error }}
+        </p>
+
+        <button
+          (click)="loadPopularMovies()"
+          class="mt-5 px-5 py-2 rounded-lg bg-white text-gray-950 font-semibold hover:bg-gray-200 transition"
+        >
+          Try Again
+        </button>
+
+      </div>
+
+    }
+
+
+    <!-- No Search Results -->
+    @if (!loading && !error && isSearching && movies.length === 0) {
+
+      <div class="py-20 text-center">
+
+        <div class="text-5xl">
+          🎬
+        </div>
+
+        <h2 class="mt-5 text-xl font-semibold">
+          No movies found
+        </h2>
+
+        <p class="mt-2 text-gray-500">
+          Try searching with a different movie title.
+        </p>
+
+        <button
+          (click)="loadPopularMovies()"
+          class="mt-6 px-6 py-3 rounded-lg bg-white text-gray-950 font-semibold hover:bg-gray-200 transition"
+        >
+          Back to Popular Movies
+        </button>
+
+      </div>
+
+    }
+
+
+    <!-- Movie Grid -->
+    @if (!loading && movies.length > 0) {
+
+      <div
+        class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6"
+      >
+
+        @for (movie of movies; track movie.id) {
+
+          <app-movie-card
+            [movie]="movie"
+          ></app-movie-card>
+
+        }
+
+      </div>
+
+    }
+    <!-- Load More -->
+    @if (
+        !loading &&
+        !error &&
+        movies.length > 0 &&
+        currentPage < totalPages
+        ) {
+
+        <div class="flex justify-center mt-12">
+
+            <button
+            (click)="loadMore()"
+            [disabled]="loadingMore"
+            class="px-8 py-3 rounded-lg bg-white text-gray-950 font-semibold hover:bg-gray-200 transition disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+
+            @if (loadingMore) {
+                Loading more...
+            } @else {
+                Load More
+            }
+
+            </button>
+
+        </div>
+
+    }
+
+  </section>
+
+</div>

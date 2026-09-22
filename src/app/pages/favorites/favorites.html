@@ -1,0 +1,74 @@
+<div class="min-h-screen bg-gray-950 text-white">
+
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <div class="flex items-center justify-between mb-8">
+
+      <div>
+        <h1 class="text-3xl sm:text-4xl font-bold">
+          My Favorites
+        </h1>
+
+        <p class="mt-2 text-gray-500">
+          Movies you've saved for later.
+        </p>
+      </div>
+
+      @if (movies.length > 0) {
+        <span class="text-sm text-gray-500">
+          {{ movies.length }} movies
+        </span>
+      }
+
+    </div>
+
+
+    @if (movies.length === 0) {
+
+      <div class="py-20 text-center">
+
+        <div class="text-5xl">
+          ❤️
+        </div>
+
+        <h2 class="mt-5 text-xl font-semibold">
+          No favorite movies yet
+        </h2>
+
+        <p class="mt-2 text-gray-500">
+          Start exploring movies and add your favorites.
+        </p>
+
+        <a
+          routerLink="/"
+          class="inline-block mt-6 px-6 py-3 rounded-lg bg-white text-gray-950 font-semibold hover:bg-gray-200 transition"
+        >
+          Discover Movies
+        </a>
+
+      </div>
+
+    }
+
+
+    @if (movies.length > 0) {
+
+      <div
+        class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6"
+      >
+
+        @for (movie of movies; track movie.id) {
+
+          <app-movie-card
+            [movie]="movie"
+          ></app-movie-card>
+
+        }
+
+      </div>
+
+    }
+
+  </section>
+
+</div>

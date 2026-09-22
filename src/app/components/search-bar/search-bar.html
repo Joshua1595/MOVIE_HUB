@@ -1,0 +1,18 @@
+<div class="flex flex-col sm:flex-row gap-3">
+
+  <input
+    type="text"
+    [(ngModel)]="searchQuery"
+    (keyup.enter)="onSearch()"
+    placeholder="Search for a movie..."
+    class="flex-1 px-5 py-3 rounded-lg bg-gray-900 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:border-gray-500"
+  />
+
+  <button
+    (click)="onSearch()"
+    class="px-6 py-3 rounded-lg bg-white text-gray-950 font-semibold hover:bg-gray-200 transition"
+  >
+    Search
+  </button>
+
+</div>

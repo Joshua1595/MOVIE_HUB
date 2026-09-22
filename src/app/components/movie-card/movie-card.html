@@ -1,0 +1,54 @@
+<a
+  [routerLink]="['/movie', movie.id]"
+  class="group block"
+>
+
+  <div
+    class="relative overflow-hidden rounded-xl bg-gray-900 aspect-[2/3]"
+  >
+
+    <!-- Poster -->
+    <img
+      [src]="movie.poster"
+      [alt]="movie.title"
+      class="w-full h-full object-cover transition duration-300 group-hover:scale-105"
+    />
+
+
+    <!-- Rating -->
+    <div
+      class="absolute top-3 right-3 px-2 py-1 rounded-md bg-black/80 text-white text-sm font-semibold"
+    >
+      ⭐ {{ movie.rating }}
+    </div>
+
+
+    <!-- Favorite Button -->
+    <button
+      type="button"
+      (click)="toggleFavorite($event)"
+      class="absolute top-3 left-3 w-10 h-10 flex items-center justify-center rounded-full bg-black/80 text-xl hover:bg-black transition"
+      [attr.aria-label]="isFavorite() ? 'Remove from favorites' : 'Add to favorites'"
+    >
+      {{ isFavorite() ? '❤️' : '🤍' }}
+    </button>
+
+  </div>
+
+
+  <!-- Movie Information -->
+  <div class="mt-3">
+
+    <h3
+      class="text-white font-semibold text-lg truncate group-hover:text-gray-300 transition"
+    >
+      {{ movie.title }}
+    </h3>
+
+    <p class="mt-1 text-sm text-gray-500">
+      {{ movie.releaseDate | slice:0:4 }}
+    </p>
+
+  </div>
+
+</a>

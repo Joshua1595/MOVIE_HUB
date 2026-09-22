@@ -1,0 +1,103 @@
+<div class="w-full">
+
+  <!-- Section Label -->
+  <div class="flex items-center gap-3 mb-4">
+
+    <span class="text-lg">
+      🎭
+    </span>
+
+    <h3 class="text-sm font-semibold text-gray-300 uppercase tracking-wider">
+      Browse by Genre
+    </h3>
+
+  </div>
+
+  @if (loading) {
+
+    <div class="flex gap-3 overflow-x-auto pb-3">
+
+      @for (item of [1, 2, 3, 4, 5, 6, 7]; track item) {
+
+        <div
+          class="h-10 w-24 shrink-0 rounded-full bg-gray-800 animate-pulse"
+        ></div>
+
+      }
+
+    </div>
+
+  }
+
+  @if (error && !loading) {
+
+    <div class="flex items-center gap-3">
+
+      <p class="text-sm text-red-400">
+        {{ error }}
+      </p>
+
+      <button
+        type="button"
+        (click)="loadGenres()"
+        class="text-sm text-white underline hover:text-gray-300"
+      >
+        Retry
+      </button>
+
+    </div>
+
+  }
+
+  @if (!loading && !error) {
+
+    <div
+      class="relative"
+    >
+
+      <div
+        class="flex gap-2.5 overflow-x-auto pb-3 scrollbar-hide"
+      >
+
+        <!-- All -->
+        <button
+          type="button"
+          (click)="selectGenre(null)"
+          [class.bg-white]="selectedGenreId === null"
+          [class.text-gray-950]="selectedGenreId === null"
+          [class.shadow-lg]="selectedGenreId === null"
+          [class.bg-gray-900]="selectedGenreId !== null"
+          [class.text-gray-300]="selectedGenreId !== null"
+          class="group shrink-0 px-5 py-2.5 rounded-full border border-gray-800 font-medium text-sm transition-all duration-200 hover:bg-white hover:text-gray-950 hover:border-white"
+        >
+          <span class="mr-1.5">✨</span>
+          All Movies
+        </button>
+
+        <!-- Genres -->
+        @for (genre of genres; track genre.id) {
+
+          <button
+            type="button"
+            (click)="selectGenre(genre.id)"
+            [class.bg-white]="selectedGenreId === genre.id"
+            [class.text-gray-950]="selectedGenreId === genre.id"
+            [class.border-white]="selectedGenreId === genre.id"
+            [class.shadow-lg]="selectedGenreId === genre.id"
+            [class.bg-gray-900]="selectedGenreId !== genre.id"
+            [class.text-gray-300]="selectedGenreId !== genre.id"
+            [class.border-gray-800]="selectedGenreId !== genre.id"
+            class="shrink-0 px-5 py-2.5 rounded-full border font-medium text-sm transition-all duration-200 hover:bg-white hover:text-gray-950 hover:border-white"
+          >
+            {{ genre.name }}
+          </button>
+
+        }
+
+      </div>
+
+    </div>
+
+  }
+
+</div>
